@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
-class Staf(BaseModel):
+class Staff(BaseModel):
 
     uid: str = Field(alias='ID')
     name: str = Field(alias='Name')
