@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "fitnes-endpoint"
+version = "0.1.0"
+description = ""
+authors = ["RomanZorkin <zorkin.roman@gmail.com>"]
+readme = "README.md"
+packages = [{include = "fitnes_endpoint"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.88.0"
+fastapi-admin = "^1.0.4"
+httpx = "^0.23.1"
+unicorn = "^2.0.1.post1"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^0.991"
+wemake-python-styleguide = "^0.17.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
