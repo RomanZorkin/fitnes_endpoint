@@ -2,23 +2,14 @@ import httpx
 
 from service import config, schemas
 
-app_config = config.load_from_env()
-
-data = {
-    'Request_id': 'e1477272-88d1-4acc-8e03-7008cdedc81e',
-    'ClubId': '59115d1e-9052-11eb-810c-6eae8b56243b',
-    'Method': 'GetSpecialistList',
-    'Parameters': {'ServiceId': ''},
-}
+endpoint_config = config.load_from_env().endpoint
 
 
-def get_team() -> list[schemas.Staf]:
-
+def get_team() -> list[schemas.Staff]:
     response = httpx.post(
-        app_config.endpoint,
-        auth=(app_config.user, app_config.password),
-        json=data,
+        endpoint_config.url,
+        auth=(endpoint_config.user, endpoint_config.password),
+        json=endpoint_config.data,
     )
-
-    body = response.json()['Parameters']
-    return [schemas.Staf(**person) for person in body]
+    body = response.json()[endpoint_config.contentname]
+    return [schemas.Staff(**person) for person in body]
