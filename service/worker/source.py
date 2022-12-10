@@ -11,5 +11,5 @@ def get_team() -> list[schemas.Staff]:
         auth=(endpoint_config.user, endpoint_config.password),
         json=endpoint_config.data,
     )
-    body = response.json()[endpoint_config.contentname]
-    return [schemas.Staff(**person) for person in body]
+    team = response.json()[endpoint_config.contentname]
+    return [schemas.Staff(**person).dict(by_alias=False) for person in team]
