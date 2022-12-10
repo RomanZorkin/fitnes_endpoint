@@ -1,0 +1,8 @@
+# APP settings
+APP_HOST=0.0.0.0
+APP_PORT=1300
+
+# 1C endpoint settings
+DB_URL=http://176.192.70.122:90/fitnes_t_nfc_mobile/hs/nfc_mobile/v1
+USER=FitnessKit
+PASSWORD=vY0xodyg
