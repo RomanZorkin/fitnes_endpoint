@@ -17,7 +17,7 @@ class Endpoint(BaseModel):
 
 
 class Host(BaseModel):
-    app_port: str
+    app_port: int
     app_host: str
 
 
