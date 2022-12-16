@@ -12,6 +12,7 @@ fastapi = "^0.88.0"
 fastapi-admin = "^1.0.4"
 httpx = "^0.23.1"
 unicorn = "^2.0.1.post1"
+aioredis = "^2.0.1"
 
 
 [tool.poetry.group.dev.dependencies]

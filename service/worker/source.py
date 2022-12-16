@@ -1,3 +1,5 @@
+from typing import Any
+
 import httpx
 
 from service import config, schemas
@@ -5,7 +7,7 @@ from service import config, schemas
 endpoint_config = config.load_from_env().endpoint
 
 
-def get_team() -> list[schemas.Staff]:
+def get_team() -> list[dict[str, Any]]:
     response = httpx.post(
         endpoint_config.url,
         auth=(endpoint_config.user, endpoint_config.password),

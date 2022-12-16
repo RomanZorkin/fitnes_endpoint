@@ -2,6 +2,8 @@ import os
 
 from pydantic import BaseModel
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 class Endpoint(BaseModel):
     url: str
