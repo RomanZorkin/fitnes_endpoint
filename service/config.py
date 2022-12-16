@@ -5,6 +5,10 @@ from pydantic import BaseModel
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
+class DataBase(BaseModel):
+    db_url: str
+
+
 class Endpoint(BaseModel):
     url: str
     user: str
@@ -26,6 +30,7 @@ class Host(BaseModel):
 class AppConfig(BaseModel):
     endpoint: Endpoint
     host: Host
+    db: DataBase
 
 
 def load_from_env() -> AppConfig:
@@ -38,5 +43,8 @@ def load_from_env() -> AppConfig:
         host=Host(
             app_port=os.environ['APP_PORT'],
             app_host=os.environ['APP_HOST'],
+        ),
+        db=DataBase(
+            db_url=os.environ['DATABASE_URL'],
         ),
     )
