@@ -9,14 +9,14 @@ from service.repos.rule import EndpointRepo
 endpoint_repo = EndpointRepo()
 
 
-def get_settings(uid: int) -> schemas.Endpoint:
+async def get_settings(uid: int) -> schemas.Endpoint:
     rules = endpoint_repo.get_by_uid(uid=uid)
     endpoint_config = schemas.Endpoint.from_orm(rules)
     endpoint_config.data.clubid = endpoint_config.clubid
     return endpoint_config
 
 
-def get_response(endpoint_config: schemas.Endpoint):
+async def get_response(endpoint_config: schemas.Endpoint):
     try:
         response = httpx.post(
             endpoint_config.url,
@@ -33,9 +33,9 @@ def get_response(endpoint_config: schemas.Endpoint):
         raise HTTPException(status_code=500, detail=f'Server error {exc}')
 
 
-def get_team() -> list[dict[str, Any]]:
-    endpoint_config = get_settings(uid=2)
-    response = get_response(endpoint_config)
+async def get_team() -> Any:
+    endpoint_config = await get_settings(uid=2)
+    response = await get_response(endpoint_config)
     team = response.json().get(endpoint_config.contentname, None)
 
     if not team:
@@ -45,4 +45,4 @@ def get_team() -> list[dict[str, Any]]:
 changed',
         )
 
-    return [schemas.Staff(**person).dict(by_alias=False) for person in team]
+    return team
