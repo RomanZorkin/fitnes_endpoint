@@ -1,16 +1,22 @@
-import datetime
+from sqlalchemy import Column, Integer, String
 
-from tortoise import fields
-
-from fastapi_admin.models import AbstractAdmin
+from service.db import Base, engine
 
 
-class Admin(AbstractAdmin):
-    last_login = fields.DatetimeField(description="Last Login", default=datetime.datetime.now)
-    email = fields.CharField(max_length=200, default="")
-    avatar = fields.CharField(max_length=200, default="")
-    intro = fields.TextField(default="")
-    created_at = fields.DatetimeField(auto_now_add=True)
+class Endpoint(Base):
+    __tablename__ = 'endpoint'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    clubid = Column(String)
+    login = Column(String)
+    password = Column(String)
+    url = Column(String)    
 
-    def __str__(self):
-        return f"{self.pk}#{self.username}"
+    def as_dict(self):
+        return {col.name: getattr(self, col.name) for col in self.__table__.columns}
+
+    def __repr__(self):
+        return f'<Endpoint url="{self.url}" clubid="{self.clubid}">'
+
+
+def create_schema():
+    Base.metadata.create_all(bind=engine)
