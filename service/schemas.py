@@ -33,3 +33,7 @@ class Endpoint(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class Answer(BaseModel):
+    team: list[Staff]
