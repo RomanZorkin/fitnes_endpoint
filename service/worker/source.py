@@ -23,9 +23,10 @@ def get_response(endpoint_config: schemas.Endpoint):
             auth=(endpoint_config.user, endpoint_config.password),
             json=endpoint_config.data.dict(),
         )
-        if response.status_code != 200:
-            text = response.text            
-            raise HTTPException(status_code=500, detail=f'Server error {text}')
+        code = response.status_code
+        if code != 200:
+            text = response.text
+            raise HTTPException(status_code=500, detail=f'Server error: status {code} {text}')
         return response
 
     except httpx.HTTPError as exc:
@@ -41,7 +42,7 @@ def get_team() -> list[dict[str, Any]]:
         raise HTTPException(
             status_code=400,
             detail='Error processing the received data. Perhaps the structure of the response has\
-        changed',
+changed',
         )
 
     return [schemas.Staff(**person).dict(by_alias=False) for person in team]
