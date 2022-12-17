@@ -6,6 +6,6 @@ router = APIRouter()
 
 
 @router.get('/team/get_employees/')
-async def read_team():
-    team = await source.get_team()
+def read_team():
+    team = source.get_team()
     return {'team': team}
