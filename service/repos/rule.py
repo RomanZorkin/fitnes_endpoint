@@ -11,5 +11,5 @@ class EndpointRepo:
     def get_by_uid(self, uid: int) -> Endpoint:
         endpoint: Endpoint = Endpoint.query.filter_by(id=uid).first()
         if not endpoint:
-            raise HTTPException(status_code=404, detail="Item not found")
+            raise HTTPException(status_code=404, detail='Item not found')
         return endpoint

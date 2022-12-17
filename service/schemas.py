@@ -27,7 +27,7 @@ class Endpoint(BaseModel):
     url: str
     user: str = Field(alias='login')
     password: str
-    contentname = 'Parameters'
+    contentname = 'Parameter'
     clubid: str
     data: EndpointData = EndpointData()
 

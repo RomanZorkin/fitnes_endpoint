@@ -6,6 +6,5 @@ run:
 
 
 lint:
-	@mypy service
 	@flake8 service
-
+	@mypy service

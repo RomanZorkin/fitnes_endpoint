@@ -9,7 +9,7 @@ class Endpoint(Base):
     clubid = Column(String)
     login = Column(String)
     password = Column(String)
-    url = Column(String)    
+    url = Column(String)
 
     def as_dict(self):
         return {col.name: getattr(self, col.name) for col in self.__table__.columns}
