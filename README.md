@@ -27,14 +27,11 @@ PASSWORD=vY0xodyg
 DATABASE_URL=postgresql+asyncpg://vasy:123@db:5432/
 ```
 #
-## Before we start our service we need start admin service + db
+## Before we start our service we NEED start admin service + db
 
-Instructions in 
+Instructions in https://github.com/RomanZorkin/my_picallo
 
-
-
-
-## than you can start
+## Now you can start
 ```
 make run
 ```
