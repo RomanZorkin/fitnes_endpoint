@@ -1,9 +1,12 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import declarative_base
 
-from service.db import Base, engine
+from service.db import engine
+
+Base = declarative_base()
 
 
-class Endpoint(Base):
+class Endpoint(Base):  # type: ignore
     __tablename__ = 'endpoint'
     id = Column(Integer, primary_key=True, autoincrement=True)
     clubid = Column(String)
@@ -18,5 +21,6 @@ class Endpoint(Base):
         return f'<Endpoint url="{self.url}" clubid="{self.clubid}">'
 
 
-def create_schema():
-    Base.metadata.create_all(bind=engine)
+async def start_model():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
