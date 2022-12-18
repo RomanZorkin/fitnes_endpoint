@@ -10,7 +10,8 @@ endpoint_repo = EndpointRepo()
 
 
 async def get_settings(uid: int) -> schemas.Endpoint:
-    rules = endpoint_repo.get_by_uid(uid=uid)
+    rules = await endpoint_repo.get_endpoint(uid=uid)
+    # добавить ошибку валидации данных
     endpoint_config = schemas.Endpoint.from_orm(rules)
     endpoint_config.data.clubid = endpoint_config.clubid
     return endpoint_config

@@ -1,15 +1,18 @@
 from fastapi import HTTPException
+from sqlalchemy.future import select
 
+from service.db import async_session
 from service.models import Endpoint
 
 
 class EndpointRepo:
 
-    def get_all(self) -> Endpoint:
-        return Endpoint.query.all()
-
-    def get_by_uid(self, uid: int) -> Endpoint:
-        endpoint: Endpoint = Endpoint.query.filter_by(id=uid).first()
-        if not endpoint:
-            raise HTTPException(status_code=404, detail='Item not found')
-        return endpoint
+    async def get_endpoint(self, uid: int):
+        async with async_session() as session:
+            result = await session.execute(
+                select(Endpoint).where(Endpoint.id == uid),
+            )
+            if not result:
+                raise HTTPException(status_code=404, detail='Item not found')
+            answer = result.first()[0]
+        return answer
