@@ -11,7 +11,6 @@ endpoint_repo = EndpointRepo()
 
 async def get_settings(uid: int) -> schemas.Endpoint:
     rules = await endpoint_repo.get_endpoint(uid=uid)
-    # добавить ошибку валидации данных
     endpoint_config = schemas.Endpoint.from_orm(rules)
     endpoint_config.data.clubid = endpoint_config.clubid
     return endpoint_config
@@ -19,16 +18,17 @@ async def get_settings(uid: int) -> schemas.Endpoint:
 
 async def get_response(endpoint_config: schemas.Endpoint):
     try:
-        response = httpx.post(
-            endpoint_config.url,
-            auth=(endpoint_config.user, endpoint_config.password),
-            json=endpoint_config.data.dict(),
-        )
-        code = response.status_code
-        if code != 200:
-            text = response.text
-            raise HTTPException(status_code=500, detail=f'Server error: status {code} {text}')
-        return response
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                endpoint_config.url,
+                auth=(endpoint_config.user, endpoint_config.password),
+                json=endpoint_config.data.dict(),
+            )
+            code = response.status_code
+            if code != 200:
+                text = response.text
+                raise HTTPException(status_code=500, detail=f'Server error: status {code} {text}')
+            return response
 
     except httpx.HTTPError as exc:
         raise HTTPException(status_code=500, detail=f'Server error {exc}')
